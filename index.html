@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventBridge Commerce: Enterprise Microservices Messaging Platform</title>
+    <meta name="description" content="Stakeholder-ready architecture showcase demonstrating scalable service communication, event streaming, reliable queue-based routing, retry handling, and dead letter processing.">
+    
+    <!-- CSS stylesheet link -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="grid-overlay"></div>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <div class="logo-icon">EB</div>
+                <span>EventBridge Commerce</span>
+            </div>
+            <nav>
+                <a href="#overview">Overview</a>
+                <a href="#tech-stack">Tech Stack</a>
+                <a href="#architecture">Architecture</a>
+                <a href="#responsibilities">Services</a>
+                <a href="#simulation">Live Simulation</a>
+                <a href="#decisions">Decisions & Value</a>
+                <a href="#workflow-timeline">Workflow</a>
+            </nav>
+            <div>
+                <a href="#simulation" class="btn btn-primary" id="header-cta-btn">Run Simulator</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <h1>EventBridge Commerce</h1>
+                    <div class="subtitle">Enterprise Microservices Messaging Platform</div>
+                    <p class="description">
+                        A stakeholder-ready architecture showcase demonstrating scalable service communication, event streaming, reliable queue-based routing, retry handling, and dead letter processing using Spring Boot Microservices Architecture, Kafka, and RabbitMQ.
+                    </p>
+                    <div class="hero-cta">
+                        <a href="#architecture" class="btn btn-primary">View Architecture</a>
+                        <a href="#simulation" class="btn btn-secondary">Explore Messaging Flow</a>
+                    </div>
+                </div>
+                <div class="hero-visual" id="hero-visual">
+                    <svg class="hero-svg-overlay">
+                        <!-- Connecting flow paths -->
+                        <path d="M 70 80 L 190 80" class="hero-flow-line"></path>
+                        <path d="M 190 80 Q 250 140 310 80" class="hero-flow-line"></path>
+                        <path d="M 310 80 L 430 80" class="hero-flow-line"></path>
+                        <path d="M 430 80 Q 250 250 70 230" class="hero-flow-line"></path>
+                        <path d="M 70 230 L 190 230" class="hero-flow-line"></path>
+                        <path d="M 190 230 L 310 230" class="hero-flow-line"></path>
+                        <path d="M 310 230 L 430 230" class="hero-flow-line"></path>
+                    </svg>
+                    
+                    <div class="hero-visual-row">
+                        <div class="hero-visual-card service">Order Service</div>
+                        <div class="hero-visual-card kafka">Kafka Stream</div>
+                        <div class="hero-visual-card service">Payment Service</div>
+                    </div>
+                    
+                    <div class="hero-visual-row">
+                        <div class="hero-visual-card service">Inventory Service</div>
+                        <div class="hero-visual-card service">Shipping Service</div>
+                        <div class="hero-visual-card rabbitmq">RabbitMQ Queue</div>
+                    </div>
+
+                    <div class="hero-visual-row">
+                        <div class="hero-visual-card service">Notification Service</div>
+                        <div class="hero-visual-card retry">Retry Queue</div>
+                        <div class="hero-visual-card dlq">Dead Letter Queue</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Executive Overview Section -->
+    <section id="overview">
+        <div class="container">
+            <div class="overview-grid">
+                <div class="overview-left">
+                    <div class="section-header" style="text-align: left; margin: 0 0 2rem 0;">
+                        <h2>Executive Overview</h2>
+                        <p style="color: var(--color-primary); font-weight: 600; margin-top: 0.5rem;">Asynchronous Order Orchestration for Enterprise Scale</p>
+                    </div>
+                    <p>
+                        EventBridge Commerce is designed to demonstrate how a core transactional business process—enterprise commerce order-processing—can be modularized into isolated microservices communicating through asynchronous messaging protocols.
+                    </p>
+                    <p>
+                        By decoupling services, the platform ensures that spikes in order volume do not cascade into downstream systems, payments are validated reliably, stock reservations are managed safely, shipping requests are dispatched sequentially, and operations teams maintain real-time situational visibility over execution pipelines.
+                    </p>
+                </div>
+                <div class="overview-benefits">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">⏱️</div>
+                        <h4>Workflow Coordination</h4>
+                        <p>Faster order lifecycle completion using concurrent, asynchronous execution pathways.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🔗</div>
+                        <h4>Reduced Coupling</h4>
+                        <p>Eliminate tight HTTP dependencies between services to increase domain independence.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">📈</div>
+                        <h4>Better Scalability</h4>
+                        <p>Scale transaction-heavy services independently based on specific demand.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🛡️</div>
+                        <h4>Failure Isolation</h4>
+                        <p>Ensure payment timeouts or third-party API issues do not disrupt order intake.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">👁️</div>
+                        <h4>Operational Visibility</h4>
+                        <p>Real-time distributed status tracing across all decoupled endpoints.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">♻️</div>
+                        <h4>Safer Retry Handling</h4>
+                        <p>Isolate temporary errors from permanent processing exceptions via dead-letter routing.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack Section (EXACT TECH STACK RULE) -->
+    <section id="tech-stack">
+        <div class="container">
+            <div class="section-header">
+                <h2>Tech Stack</h2>
+                <p>Core technologies engineered to run this event-driven commerce architecture.</p>
+            </div>
+            
+            <div class="tech-stack-grid">
+                <!-- Spring Boot -->
+                <div class="tech-card spring-boot">
+                    <div class="tech-icon-container">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5h-2v-2h2v2zm0-3.5h-2V7h2v6z"/>
+                        </svg>
+                    </div>
+                    <h3>Spring Boot Microservices Architecture</h3>
+                    <p>
+                        Used to design independent business services for order, payment, inventory, shipping, and notification workflows. Each service owns its business responsibility and communicates through events and messages instead of tight direct dependencies.
+                    </p>
+                </div>
+
+                <!-- Kafka -->
+                <div class="tech-card kafka">
+                    <div class="tech-icon-container">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 3C6.48 3 2 7.48 2 13s4.48 10 10 10 10-4.48 10-10S17.52 3 12 3zm-1 14.5h-2v-9h2v9zm4 0h-2v-9h2v9z"/>
+                        </svg>
+                    </div>
+                    <h3>Kafka</h3>
+                    <p>
+                        Used for high-throughput event streaming between microservices. Kafka is used to publish and consume business events such as order-created, payment-approved, inventory-reserved, shipment-created, and notification-requested.
+                    </p>
+                </div>
+
+                <!-- RabbitMQ -->
+                <div class="tech-card rabbitmq">
+                    <div class="tech-icon-container">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2z"/>
+                        </svg>
+                    </div>
+                    <h3>RabbitMQ</h3>
+                    <p>
+                        Used for reliable queue-based message routing, task distribution, retry handling, notification processing, and dead letter queue workflows.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture Overview Section -->
+    <section id="architecture">
+        <div class="container">
+            <div class="section-header">
+                <h2>Architecture Overview</h2>
+                <p>Distributed topology separating real-time event distribution from transaction queue worker models.</p>
+            </div>
+
+            <div class="architecture-container">
+                <div class="architecture-diagram">
+                    <!-- Connectors SVG -->
+                    <svg class="diag-connector-svg" id="diag-svg">
+                        <!-- Markers for arrows -->
+                        <defs>
+                            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="8" refY="3.5" orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="#64748b"/>
+                            </marker>
+                            <marker id="arrowhead-kafka" markerWidth="10" markerHeight="7" refX="8" refY="3.5" orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="#818cf8"/>
+                            </marker>
+                            <marker id="arrowhead-rabbitmq" markerWidth="10" markerHeight="7" refX="8" refY="3.5" orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="#f97316"/>
+                            </marker>
+                            <marker id="arrowhead-failure" markerWidth="10" markerHeight="7" refX="8" refY="3.5" orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/>
+                            </marker>
+                        </defs>
+                        
+                        <!-- Connecting arrows -->
+                        <path d="M 140 50 L 220 50" class="diag-arrow" id="flow-cust-order"></path>
+                        <path d="M 390 50 L 460 50" class="diag-arrow kafka-flow" id="flow-order-kafka" style="marker-end: url(#arrowhead-kafka);"></path>
+                        
+                        <!-- Kafka Fanout (Kafka to Payment, Inventory, Shipping) -->
+                        <path d="M 570 50 L 640 50" class="diag-arrow kafka-flow" id="flow-kafka-pay" style="marker-end: url(#arrowhead-kafka);"></path>
+                        <path d="M 515 80 L 515 140 L 640 140" class="diag-arrow kafka-flow" id="flow-kafka-inv" style="marker-end: url(#arrowhead-kafka);"></path>
+                        <path d="M 515 80 L 515 230 L 640 230" class="diag-arrow kafka-flow" id="flow-kafka-ship" style="marker-end: url(#arrowhead-kafka);"></path>
+
+                        <!-- Shipping to RabbitMQ -->
+                        <path d="M 820 230 L 890 230" class="diag-arrow rabbitmq-flow" id="flow-ship-rabbit" style="marker-end: url(#arrowhead-rabbitmq);"></path>
+                        
+                        <!-- RabbitMQ to Notification -->
+                        <path d="M 940 180 L 940 85" class="diag-arrow rabbitmq-flow" id="flow-rabbit-notif" style="marker-end: url(#arrowhead-rabbitmq);"></path>
+                        
+                        <!-- Notification to Customer -->
+                        <path d="M 850 50 L 820 50" class="diag-arrow" id="flow-notif-cust"></path>
+
+                        <!-- Failure Handling Flow (Notification -> Retry -> DLQ -> Ops) -->
+                        <path d="M 940 85 L 1050 140" class="diag-arrow failure-flow" id="flow-fail-retry" style="marker-end: url(#arrowhead-failure);"></path>
+                        <path d="M 1110 200 L 1110 260" class="diag-arrow failure-flow" id="flow-retry-dlq" style="marker-end: url(#arrowhead-failure);"></path>
+                        <path d="M 1110 320 L 1000 370" class="diag-arrow failure-flow" id="flow-dlq-ops" style="marker-end: url(#arrowhead-failure);"></path>
+                    </svg>
+
+                    <!-- Row 1: Core Stream -->
+                    <div class="diag-row">
+                        <div class="diag-node client" style="left: 0px;">Customer Order</div>
+                        <div class="diag-node service" style="left: 0px;">Order Service</div>
+                        <div class="diag-node bus-kafka" style="left: 0px;">Kafka Event Stream</div>
+                        <div class="diag-node service" style="left: 0px;">Payment Service</div>
+                    </div>
+
+                    <!-- Row 2: Secondary Processing -->
+                    <div class="diag-row">
+                        <div class="diag-node service" style="margin-left: auto; margin-right: 180px;">Inventory Service</div>
+                        <div class="diag-node retry-node" style="margin-right: 20px;">Retry Queue</div>
+                    </div>
+
+                    <!-- Row 3: Fulfillment & Message Routing -->
+                    <div class="diag-row">
+                        <div class="diag-node service" style="margin-left: auto; margin-right: 180px;">Shipping Service</div>
+                        <div class="diag-node bus-rabbitmq" style="margin-right: 180px;">RabbitMQ Queue</div>
+                        <div class="diag-node dlq-node" style="margin-right: 20px;">Dead Letter Queue</div>
+                    </div>
+
+                    <!-- Row 4: Consumer & Ops -->
+                    <div class="diag-row">
+                        <div class="diag-node service" style="margin-left: 200px;">Notification Service</div>
+                        <div class="diag-node client" style="margin-left: 50px;">Operations Review</div>
+                    </div>
+                </div>
+
+                <div class="diag-details">
+                    <div class="diag-detail-card">
+                        <h4><span>1.</span> Event Streaming (Kafka)</h4>
+                        <p>Kafka acts as our distributed event log. Business operations (like creating an order) publish immutable facts (events). Downstream services consume these asynchronously to perform heavy database updates.</p>
+                    </div>
+                    <div class="diag-detail-card">
+                        <h4><span>2.</span> Reliable Task Queues (RabbitMQ)</h4>
+                        <p>RabbitMQ controls delivery guarantees for specific jobs. It handles target-to-consumer queue distribution, acknowledgment flags, backoffs, and routing constraints for execution tasks like sending user notifications.</p>
+                    </div>
+                    <div class="diag-detail-card">
+                        <h4><span>3.</span> Isolated Failure Routines</h4>
+                        <p>Temporary exceptions (like API timeouts) trigger retry limits in the Retry Queue before escaping. Persistent issues route to the DLQ, ensuring clean failure boundaries and system stability.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Microservices Responsibilities Section -->
+    <section id="responsibilities">
+        <div class="container">
+            <div class="section-header">
+                <h2>Microservices Responsibilities</h2>
+                <p>A breakdown of independent domain microservices, defining clear logic inputs and outputs.</p>
+            </div>
+
+            <div class="responsibilities-grid">
+                <!-- Service 1: Order -->
+                <div class="resp-card">
+                    <div class="resp-header">
+                        <span class="resp-title">Order Service</span>
+                        <span class="resp-tag">Producer</span>
+                    </div>
+                    <div class="resp-body">
+                        <div class="resp-field">
+                            <span class="resp-label">Business Responsibility</span>
+                            <span class="resp-val">Handles customer order intake, validates order details, manages order lifecycle status, and publishes order-created events.</span>
+                        </div>
+                        <div class="resp-field">
+                            <span class="resp-label">Input Source</span>
+                            <span class="resp-val">Customer order request</span>
+                        </div>
+                        <div class="resp-field">
+                            <span class="resp-label">Output Target</span>
+                            <span class="resp-val">order-created event (Kafka Topic)</span>
+                        </div>
+                        <div class="resp-field">
+                            <span class="resp-label">Failure Scenario</span>
+                            <span class="resp-val failure">Invalid order details, duplicate order request, or order validation failure</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 2: Payment -->
+                <div class="resp-card">
+                    <div class="resp-header">
+                        <span class="resp-title">Payment Service</span>
+                        <span class="resp-tag">Consumer/Producer</span>
+                    </div>
+                    <div class="resp-body">
+                        <div class="resp-field">
+                            <span class="resp-label">Business Responsibility</span>
+                            <span class="resp-val">Consumes order-created events, processes payment validation, determines payment status, and publishes payment-approved or payment-failed events.</span>
+                        </div>
+                        <div class="resp-field">
+                            <span class="resp-label">Input Source</span>
+                            <span class="resp-val">order-created event (Kafka Topic)</span>
+                        </div>
+                        <div class="resp-field">
+                            <span class="resp-label">Output Target</span>
+                            <span class="resp-val">payment-approved event or payment-failed event</span>
+                        </div>
+                        <div class="resp-field">
+                            <span class="resp-label">Failure Scenario</span>
+                            <span class="resp-val failure">Payment declined, payment timeout, or payment processing failure</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 3: Inventory -->
+                <div class="resp-card">
+                    <div class="resp-header">
+                        <span class="resp-title">Inventory Service</span>
+                        <span class="resp-tag">Consumer/Producer</span>
+                    </div>
+                    <div class="resp-body">
+                        <div class="resp-field">
+                            <span class="resp-label">Business Responsibility</span>
+                            <span class="resp-val">Consumes payment-approved events, reserves inventory, releases inventory when downstream processing fails, and publishes inventory-reserved or inventory-rejected events.</span>
+                        </div>
+                        <div class="resp-field">
+                            <span class="resp-label">Input Source</span>
+                            <span class="resp-val">payment-approved event (Kafka Topic)</span>
+                        </div>
+                        <div class="resp-field">
+                            <span class="resp-label">Output Target</span>
+                            <span class="resp-val">inventory-reserved event or inventory-rejected event</span>
+                        </div>
+                        <div class="resp-field">
+                            <span class="resp-label">Failure Scenario</span>
+                            <span class="resp-val failure">Item out of stock, reservation timeout, or inventory conflict</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 4: Shipping -->
+                <div class="resp-card">
+                    <div class="resp-header">
+                        <span class="resp-title">Shipping Service</span>
+                        <span class="resp-tag">Consumer/Producer</span>
+                    </div>
+                    <div class="resp-body">
+                        <div class="resp-field">
+                            <span class="resp-label">Business Responsibility</span>
+                            <span class="resp-val">Consumes inventory-reserved events, creates shipment records, updates fulfillment progress, and publishes shipment-created events.</span>
+                        </div>
+                        <div class="resp-field">
+                            <span class="resp-label">Input Source</span>
+                            <span class="resp-val">inventory-reserved event (Kafka Topic)</span>
+                        </div>
+                        <div class="resp-field">
+                            <span class="resp-label">Output Target</span>
+                            <span class="resp-val">shipment-created event (RabbitMQ routing key)</span>
+                        </div>
+                        <div class="resp-field">
+                            <span class="resp-label">Failure Scenario</span>
+                            <span class="resp-val failure">Shipping provider unavailable, invalid address, or shipment creation failure</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 5: Notification -->
+                <div class="resp-card">
+                    <div class="resp-header">
+                        <span class="resp-title">Notification Service</span>
+                        <span class="resp-tag">Consumer</span>
+                    </div>
+                    <div class="resp-body">
+                        <div class="resp-field">
+                            <span class="resp-label">Business Responsibility</span>
+                            <span class="resp-val">Consumes notification messages from RabbitMQ and sends customer-facing and operations-facing updates.</span>
+                        </div>
+                        <div class="resp-field">
+                            <span class="resp-label">Input Source</span>
+                            <span class="resp-val">notification message (RabbitMQ queue)</span>
+                        </div>
+                        <div class="resp-field">
+                            <span class="resp-label">Output Target</span>
+                            <span class="resp-val">customer-notified message</span>
+                        </div>
+                        <div class="resp-field">
+                            <span class="resp-label">Failure Scenario</span>
+                            <span class="resp-val failure">Notification delivery failure, retry exhausted, or message sent to dead letter queue</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Messaging Flow Section -->
+    <section id="messaging-flow">
+        <div class="container">
+            <div class="section-header">
+                <h2>Messaging Flow</h2>
+                <p>Visualizing differences in messaging protocols across normal execution pipelines and failure recovery paths.</p>
+            </div>
+
+            <div class="flow-layout">
+                <!-- Event Streaming (Kafka) -->
+                <div class="flow-block">
+                    <div class="flow-block-header">
+                        <h3>A. Event Streaming Flow</h3>
+                        <span class="flow-badge kafka">Kafka-Driven</span>
+                    </div>
+                    <div class="flow-steps">
+                        <div class="flow-step-node">Order Created</div>
+                        <div class="flow-step-arrow"></div>
+                        <div class="flow-step-node">Payment Started</div>
+                        <div class="flow-step-arrow"></div>
+                        <div class="flow-step-node">Payment Approved</div>
+                        <div class="flow-step-arrow"></div>
+                        <div class="flow-step-node">Inventory Reserved</div>
+                        <div class="flow-step-arrow"></div>
+                        <div class="flow-step-node">Shipment Created</div>
+                    </div>
+                    <p class="flow-block-desc">
+                        Events are immutable logs of facts that already occurred in the system. Kafka is optimized for this style of high-throughput publish-subscribe streaming. Multiple independent services listen to the same topic stream concurrently to trigger their respective processing rules without ordering constraints.
+                    </p>
+                </div>
+
+                <!-- Queue-Based (RabbitMQ) -->
+                <div class="flow-block">
+                    <div class="flow-block-header">
+                        <h3>B. Queue-Based Message Flow</h3>
+                        <span class="flow-badge rabbitmq">RabbitMQ-Driven</span>
+                    </div>
+                    <div class="flow-steps" style="justify-content: flex-start;">
+                        <div class="flow-step-node">Notification Requested</div>
+                        <div class="flow-step-arrow" style="max-width: 120px;"></div>
+                        <div class="flow-step-node">RabbitMQ Message Queue</div>
+                        <div class="flow-step-arrow" style="max-width: 120px;"></div>
+                        <div class="flow-step-node">Notification Service</div>
+                        <div class="flow-step-arrow" style="max-width: 120px;"></div>
+                        <div class="flow-step-node">Notification Sent</div>
+                    </div>
+                    <p class="flow-block-desc">
+                        Messages represent command tasks that must be processed reliably by a target service. RabbitMQ excels here, handling complex routing keys, point-to-point delivery configurations, delivery receipts, consumer load balancing, and immediate execution status callbacks.
+                    </p>
+                </div>
+
+                <!-- Failure Handling (Retry -> DLQ) -->
+                <div class="flow-block">
+                    <div class="flow-block-header">
+                        <h3>C. Failure Handling Flow</h3>
+                        <span class="flow-badge failure">Reliability Pipeline</span>
+                    </div>
+                    <div class="flow-steps">
+                        <div class="flow-step-node">Message Failed</div>
+                        <div class="flow-step-arrow"></div>
+                        <div class="flow-step-node">Retry Attempt 1</div>
+                        <div class="flow-step-arrow"></div>
+                        <div class="flow-step-node">Retry Attempt 2</div>
+                        <div class="flow-step-arrow"></div>
+                        <div class="flow-step-node">Retry Attempt 3</div>
+                        <div class="flow-step-arrow"></div>
+                        <div class="flow-step-node">Dead Letter Queue</div>
+                        <div class="flow-step-arrow"></div>
+                        <div class="flow-step-node">Operations Review</div>
+                    </div>
+                    <p class="flow-block-desc">
+                        Temporary failures (e.g. rate limits or network glitches) are retried at staggered intervals. Storing message state in dedicated Retry queues prevents resource lockups. If retries hit the max limit, the payload moves to a Dead Letter Queue (DLQ), preserving the message for inspection by operators.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Demo Simulation Section (ENHANCED & ENGAGING EDITION) -->
+    <section id="simulation">
+        <div class="container">
+            <div class="section-header">
+                <h2>Live Workflow Simulation</h2>
+                <p>Simulate transactional operations, queue propagation, and failure workflows in real time with broker partition and speed controls.</p>
+            </div>
+
+            <div class="simulation-panel">
+                
+                <!-- Stepper Progress Tracker -->
+                <div class="sim-stepper">
+                    <div class="stepper-line">
+                        <div class="stepper-line-fill" id="stepper-progress"></div>
+                    </div>
+                    <div class="step-node" id="step-0">
+                        <div class="step-circle">1</div>
+                        <span class="step-label">Ingest</span>
+                    </div>
+                    <div class="step-node" id="step-1">
+                        <div class="step-circle">2</div>
+                        <span class="step-label">Events (Kafka)</span>
+                    </div>
+                    <div class="step-node" id="step-2">
+                        <div class="step-circle">3</div>
+                        <span class="step-label">Routing (Rabbit)</span>
+                    </div>
+                    <div class="step-node" id="step-3">
+                        <div class="step-circle">4</div>
+                        <span class="step-label">Dispatch</span>
+                    </div>
+                </div>
+
+                <div class="sim-header">
+                    <div class="sim-controls-wrapper">
+                        <div class="sim-controls">
+                            <button class="btn btn-primary" id="btn-create-order">Create Order Event</button>
+                            <button class="btn btn-secondary" id="btn-simulate-fail" style="border-color: rgba(239, 68, 68, 0.4); color: #fca5a5;">Simulate Failure</button>
+                            <button class="btn btn-secondary" id="btn-reset-sim">Reset Simulation</button>
+                        </div>
+                        
+                        <!-- Simulation Speed Controller -->
+                        <div class="speed-control-box">
+                            <span class="speed-control-label">Speed</span>
+                            <button class="speed-btn" data-speed="2.0">2x</button>
+                            <button class="speed-btn active" data-speed="1.0">1x</button>
+                            <button class="speed-btn" data-speed="0.5">0.5x</button>
+                        </div>
+                    </div>
+
+                    <div class="sim-status-indicator" id="sim-status">
+                        <div class="status-dot"></div>
+                        <span class="status-badge status-healthy">Healthy</span>
+                    </div>
+                </div>
+
+                <div class="sim-grid">
+                    <!-- Dynamic Topology Canvas -->
+                    <div class="sim-visualization-wrapper">
+                        <div class="sim-visualization" id="sim-viz-container">
+                            <svg class="sim-svg-overlay" id="sim-svg">
+                                <!-- SVG Connection lines for simulation topology -->
+                                <path d="M 130 65 L 230 65" class="sim-path" id="sim-path-order-kafka"></path>
+                                <path d="M 340 65 L 440 65" class="sim-path" id="sim-path-kafka-payment"></path>
+                                <path d="M 495 95 L 495 180 L 130 180" class="sim-path" id="sim-path-payment-inventory"></path>
+                                <path d="M 130 200 L 230 200" class="sim-path" id="sim-path-inventory-shipping"></path>
+                                <path d="M 340 200 L 440 200" class="sim-path" id="sim-path-shipping-rabbitmq"></path>
+                                <path d="M 495 230 L 495 320 L 130 320" class="sim-path" id="sim-path-rabbitmq-notif"></path>
+                                <path d="M 130 340 L 230 340" class="sim-path" id="sim-path-notif-retry"></path>
+                                <path d="M 340 340 L 440 340" class="sim-path" id="sim-path-retry-dlq"></path>
+                                
+                                <!-- SVG Text-Badge Group for dynamic packet graphics -->
+                                <g id="sim-packet-group" class="sim-packet-group" style="display: none;">
+                                    <rect x="-65" y="-12" width="130" height="24" rx="12" fill="#3b82f6" style="stroke: rgba(255,255,255,0.2); stroke-width: 1;"></rect>
+                                    <text x="0" y="4" fill="#ffffff" font-size="9" font-family="'JetBrains Mono', monospace" font-weight="700" text-anchor="middle" id="sim-packet-text">payload</text>
+                                </g>
+                            </svg>
+
+                            <!-- Row 1 Nodes -->
+                            <div class="sim-nodes-row">
+                                <div class="sim-node" id="sim-node-order">Order Service</div>
+                                <div class="sim-node kafka-node" id="sim-node-kafka" style="border-color: rgba(129, 140, 248, 0.4);">Kafka Topic</div>
+                                <div class="sim-node" id="sim-node-payment">Payment Service</div>
+                            </div>
+
+                            <!-- Row 2 Nodes -->
+                            <div class="sim-nodes-row">
+                                <div class="sim-node" id="sim-node-inventory">Inventory Svc</div>
+                                <div class="sim-node" id="sim-node-shipping">Shipping Svc</div>
+                                <div class="sim-node rabbitmq-node" id="sim-node-rabbitmq" style="border-color: rgba(249, 115, 22, 0.4);">RabbitMQ Queue</div>
+                            </div>
+
+                            <!-- Row 3 Nodes -->
+                            <div class="sim-nodes-row">
+                                <div class="sim-node" id="sim-node-notification">Notification Svc</div>
+                                <div class="sim-node" id="sim-node-retry" style="border-color: rgba(245, 158, 11, 0.3);">Retry Queue</div>
+                                <div class="sim-node" id="sim-node-dlq" style="border-color: rgba(239, 68, 68, 0.3);">DLQ (Dead Letter)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar: Broker Partition Views & Message Logs -->
+                    <div class="sim-sidebar">
+                        
+                        <!-- Visual Kafka Commits Panel -->
+                        <div class="sim-panel-block">
+                            <h4>Kafka Broker Partition commits</h4>
+                            <div class="kafka-broker-log" id="kafka-partition-log">
+                                <div class="partition-col" id="part-0">
+                                    <div class="partition-title">Part-0</div>
+                                </div>
+                                <div class="partition-col" id="part-1">
+                                    <div class="partition-title">Part-1</div>
+                                </div>
+                                <div class="partition-col" id="part-2">
+                                    <div class="partition-title">Part-2</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Visual RabbitMQ Tasks Panel -->
+                        <div class="sim-panel-block">
+                            <h4>RabbitMQ Queue Buffer</h4>
+                            <div class="rabbitmq-queue-box">
+                                <div class="queue-card-slot" id="rabbitmq-queue-slot">
+                                    <!-- Dynamic Message cards will insert here -->
+                                    <span style="font-size:0.75rem; color:var(--text-muted); margin:auto;" id="queue-empty-label">Queue Empty</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sim-panel-block">
+                            <h4>Broker metrics</h4>
+                            <div class="sim-stats-grid">
+                                <div class="sim-stat-item">
+                                    <span class="sim-stat-label">Kafka Commit Status</span>
+                                    <span class="sim-stat-val" id="stat-kafka">Idle</span>
+                                </div>
+                                <div class="sim-stat-item">
+                                    <span class="sim-stat-label">RabbitMQ Queue Size</span>
+                                    <span class="sim-stat-val" id="stat-rabbitmq">0 msgs</span>
+                                </div>
+                                <div class="sim-stat-item">
+                                    <span class="sim-stat-label">Retry Attempts</span>
+                                    <span class="sim-stat-val" id="stat-retry-count">0 / 3</span>
+                                </div>
+                                <div class="sim-stat-item">
+                                    <span class="sim-stat-label">DLQ Mailbox</span>
+                                    <span class="sim-stat-val" id="stat-dlq-count">0 msgs</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sim-panel-block">
+                            <h4>Simulation Console Logs</h4>
+                            <div class="console-log-panel" id="console-logs">
+                                <div class="console-line"><span class="console-timestamp">[17:47:45]</span><span class="console-text system">System initialized. Ready for simulation.</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stakeholder Value Section (Section 8) -->
+    <section id="stakeholder-value">
+        <div class="container">
+            <div class="section-header">
+                <h2>Stakeholder Value</h2>
+                <p>Translating messaging design patterns into business value for enterprise operations.</p>
+            </div>
+
+            <div class="grid-2col">
+                <div class="bullets-card">
+                    <h4>Accelerated Order Coordination</h4>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                        By processing steps concurrently and routing tasks asynchronously, the platform completes core transactions faster. Client systems receive instant receipts instead of blocking while payment clearances or shipping tasks compile.
+                    </p>
+                    <ul class="points-list">
+                        <li>Decoupled API threads release frontend requests immediately.</li>
+                        <li>Shorter checkout cycles improve shopping cart conversion metrics.</li>
+                    </ul>
+                </div>
+                
+                <div class="bullets-card">
+                    <h4>Granular Resilience & Reliability</h4>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                        Temporary connection dropouts or system spikes are managed gracefully. Backoffs and isolated retry queues isolate faults, ensuring transient errors do not drop customer requests.
+                    </p>
+                    <ul class="points-list">
+                        <li>Failing services do not drag down upstream order collection.</li>
+                        <li>Dead Letter redirection ensures no message is lost.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="grid-2col" style="margin-top: 2rem;">
+                <div class="bullets-card">
+                    <h4>Scalable Independent Boundaries</h4>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                        As transaction volumes surge (e.g. holiday sales), single components like Payment or Shipping validation can be scaled independently without needing to deploy heavy monolithic replicas.
+                    </p>
+                    <ul class="points-list">
+                        <li>Domain boundaries reduce dependencies between service teams.</li>
+                        <li>Simplifies legacy integration updates and isolated database refactoring.</li>
+                    </ul>
+                </div>
+
+                <div class="bullets-card">
+                    <h4>Improved Operational Visibility</h4>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                        Auditing transactional milestones is simplified by tailing published events, providing operations teams with instant diagnostics across distributed environments.
+                    </p>
+                    <ul class="points-list">
+                        <li>Clear separation of transactional tasks (RabbitMQ) and state events (Kafka).</li>
+                        <li>Simplified audits of distributed histories and message payloads.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture Decisions Section (Section 9) -->
+    <section id="decisions">
+        <div class="container">
+            <div class="section-header">
+                <h2>Architecture Decisions</h2>
+                <p>Major architectural engineering decisions and technical rationales.</p>
+            </div>
+
+            <div class="grid-2col">
+                <div>
+                    <ul class="points-list">
+                        <li>
+                            <strong>Decision 1: Independent service ownership</strong><br>
+                            Each service owns one business capability so changes in payment, inventory, shipping, or notification logic do not require changing the entire system.
+                        </li>
+                        <li style="margin-top: 1.5rem;">
+                            <strong>Decision 2: Event-driven communication</strong><br>
+                            Services communicate through events so they do not need to wait for direct synchronous responses from every downstream system.
+                        </li>
+                        <li style="margin-top: 1.5rem;">
+                            <strong>Decision 3: Kafka for event streaming</strong><br>
+                            Kafka is used when business events need to be published and consumed across multiple services.
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="points-list">
+                        <li>
+                            <strong>Decision 4: RabbitMQ for reliable task routing</strong><br>
+                            RabbitMQ is used when a specific task needs to be routed, retried, and tracked reliably.
+                        </li>
+                        <li style="margin-top: 1.5rem;">
+                            <strong>Decision 5: Failure handling through retries and dead letter queues</strong><br>
+                            Temporary failures are retried, and permanently failed messages are moved to a dead letter queue for review.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- End-to-End Order Workflow Section (Section 10) -->
+    <section id="workflow-timeline">
+        <div class="container">
+            <div class="section-header">
+                <h2>End-to-End Order Workflow</h2>
+                <p>Tracking transactional orchestration across the system architecture step by step.</p>
+            </div>
+
+            <div class="timeline-container">
+                <!-- Step 1 -->
+                <div class="timeline-item">
+                    <div class="timeline-badge">01</div>
+                    <div class="timeline-content">
+                        <h3>Customer Submits Order</h3>
+                        <p>The client application transmits order specifics via HTTP POST to the API Gateway routing mechanism.</p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="timeline-item">
+                    <div class="timeline-badge">02</div>
+                    <div class="timeline-content">
+                        <h3>Order Validation & Publish</h3>
+                        <p>Order Service validates the schema, initializes the record as PENDING, and publishes an <code>order-created</code> event payload onto Kafka.</p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="timeline-item">
+                    <div class="timeline-badge">03</div>
+                    <div class="timeline-content">
+                        <h3>Payment Processing</h3>
+                        <p>Payment Service detects the <code>order-created</code> event and validates payment authorization via a mock external merchant gateway.</p>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="timeline-item">
+                    <div class="timeline-badge">04</div>
+                    <div class="timeline-content">
+                        <h3>Payment Event Broadcast</h3>
+                        <p>Upon success, Payment Service publishes a <code>payment-approved</code> event to Kafka, indicating transactional viability.</p>
+                    </div>
+                </div>
+
+                <!-- Step 5 -->
+                <div class="timeline-item">
+                    <div class="timeline-badge">05</div>
+                    <div class="timeline-content">
+                        <h3>Stock Reservation</h3>
+                        <p>Inventory Service consumes the <code>payment-approved</code> event and reserves items in stock to prevent oversells.</p>
+                    </div>
+                </div>
+
+                <!-- Step 6 -->
+                <div class="timeline-item">
+                    <div class="timeline-badge">06</div>
+                    <div class="timeline-content">
+                        <h3>Inventory Event Broadcast</h3>
+                        <p>Once reserved, Inventory Service publishes an <code>inventory-reserved</code> event to Kafka, prompting fulfillment steps.</p>
+                    </div>
+                </div>
+
+                <!-- Step 7 -->
+                <div class="timeline-item">
+                    <div class="timeline-badge">07</div>
+                    <div class="timeline-content">
+                        <h3>Fulfillment Manifest Creation</h3>
+                        <p>Shipping Service consumes the <code>inventory-reserved</code> event, compiles courier manifests, and prepares shipment records.</p>
+                    </div>
+                </div>
+
+                <!-- Step 8 -->
+                <div class="timeline-item">
+                    <div class="timeline-badge">08</div>
+                    <div class="timeline-content">
+                        <h3>Shipment Event Broadcast</h3>
+                        <p>Shipping Service publishes a <code>shipment-created</code> event to the messaging bus, concluding inventory-dependent processes.</p>
+                    </div>
+                </div>
+
+                <!-- Step 9 -->
+                <div class="timeline-item">
+                    <div class="timeline-badge">09</div>
+                    <div class="timeline-content">
+                        <h3>RabbitMQ Task Routing</h3>
+                        <p>A message task detailing the notification is routed to RabbitMQ to guarantee reliable delivery to the end user.</p>
+                    </div>
+                </div>
+
+                <!-- Step 10 -->
+                <div class="timeline-item">
+                    <div class="timeline-badge">10</div>
+                    <div class="timeline-content">
+                        <h3>Customer Update Transmission</h3>
+                        <p>Notification Service consumes the task from RabbitMQ and sends email/SMS alerts confirming dispatch.</p>
+                    </div>
+                </div>
+
+                <!-- Step 11 -->
+                <div class="timeline-item">
+                    <div class="timeline-badge">11</div>
+                    <div class="timeline-content">
+                        <h3>Exception Handling Retry Routine</h3>
+                        <p>If Notification Service encounters a network error, the message enters a Retry Queue to isolate temporary hiccups.</p>
+                    </div>
+                </div>
+
+                <!-- Step 12 -->
+                <div class="timeline-item">
+                    <div class="timeline-badge">12</div>
+                    <div class="timeline-content">
+                        <h3>DLQ Redirection</h3>
+                        <p>If three retries fail, the message moves to the Dead Letter Queue for operational review, avoiding system-wide blockages.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interview Talking Points Section (Section 12) -->
+    <section id="interview-talking">
+        <div class="container">
+            <div class="section-header">
+                <h2>Technical Interview Talking Points</h2>
+                <p>Essential points to guide technical design reviews and architectural QA sessions.</p>
+            </div>
+
+            <div class="grid-2col">
+                <ul class="points-list">
+                    <li>I separated the system into independent microservices based on business capabilities.</li>
+                    <li>I used event-driven communication to reduce tight coupling between services.</li>
+                    <li>I used Kafka for high-throughput business event streaming.</li>
+                    <li>I used RabbitMQ for reliable task routing and retry-based processing.</li>
+                </ul>
+                <ul class="points-list">
+                    <li>I designed retry and dead letter queue flows for production-style failure handling.</li>
+                    <li>I focused on clear architecture communication so both technical and non-technical stakeholders can understand the project.</li>
+                    <li>I designed the workflow around real enterprise order-processing patterns.</li>
+                    <li>I can explain why Kafka and RabbitMQ serve different messaging needs in the same architecture.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resume Sections (Sections 13 & 14) -->
+    <section id="resume-details">
+        <div class="container">
+            <div class="section-header">
+                <h2>Resume Alignment & Bullet Points</h2>
+                <p>Translating project experience directly into industry-standard Senior backend roles.</p>
+            </div>
+
+            <div class="grid-2col">
+                <div class="bullets-card">
+                    <h4>Resume Alignment</h4>
+                    <p style="color: var(--text-secondary); line-height: 1.7;">
+                        This project aligns with a Senior Software Engineer profile by demonstrating:
+                    </p>
+                    <ul class="points-list" style="margin-top: 1rem; gap: 0.75rem;">
+                        <li>Enterprise microservices architecture</li>
+                        <li>Event-driven backend design</li>
+                        <li>Distributed messaging workflows</li>
+                        <li>Service boundary design</li>
+                        <li>Messaging reliability</li>
+                        <li>Retry and dead letter queue handling</li>
+                        <li>Stakeholder communication</li>
+                        <li>System design presentation skills</li>
+                        <li>Production-style architecture thinking</li>
+                    </ul>
+                </div>
+                
+                <div class="bullets-card">
+                    <h4>Resume Bullet Points</h4>
+                    <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 1rem;">
+                        Tailored resume highlights showcasing high-impact achievements:
+                    </p>
+                    <ul class="points-list" style="gap: 0.75rem;">
+                        <li>Designed an enterprise event-driven microservices messaging platform using Spring Boot Microservices Architecture, Kafka, and RabbitMQ to demonstrate scalable order-processing workflows.</li>
+                        <li>Modeled asynchronous communication across order, payment, inventory, shipping, and notification services to improve service independence and workflow reliability.</li>
+                        <li>Created a stakeholder-facing live architecture demo explaining event streaming, queue-based routing, retry handling, and dead letter queue processing.</li>
+                        <li>Demonstrated production-style failure handling patterns including retry queues, dead letter queues, and operations review workflows.</li>
+                        <li>Presented clear service ownership boundaries and messaging flow decisions for distributed enterprise systems.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <h3>EventBridge Commerce</h3>
+            <p>Enterprise Microservices Messaging Platform</p>
+            <p style="margin-top: 1rem; font-size: 0.8rem; opacity: 0.6;">Built as a stakeholder-ready architecture showcase for microservices and messaging workflows.</p>
+        </div>
+    </footer>
+
+    <!-- JS script link -->
+    <script src="script.js"></script>
+</body>
+</html>
