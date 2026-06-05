@@ -1806,3 +1806,126 @@ footer p {
         margin-left: 1.5rem;
     }
 }
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 1rem;
+    }
+    section {
+        padding: 4rem 0;
+    }
+    .hero-content h1 {
+        font-size: 2.25rem;
+    }
+    .hero-content .subtitle {
+        font-size: 1.15rem;
+    }
+    .hero-cta {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.75rem;
+    }
+    .hero-cta .btn {
+        width: 100%;
+    }
+    
+    /* Header controls */
+    .logo {
+        font-size: 1.1rem;
+    }
+    .logo-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 0.8rem;
+    }
+    #header-cta-btn {
+        padding: 0.35rem 0.85rem;
+        font-size: 0.75rem;
+        height: 34px;
+        border-radius: 10px;
+    }
+
+    /* Shrink visualizer node cards for mobile */
+    .sim-node {
+        width: 85px !important;
+        padding: 0.65rem 0.5rem !important;
+        font-size: 0.7rem !important;
+    }
+    .sim-nodes-row {
+        margin-bottom: 3.5rem !important;
+    }
+    
+    .hero-visual-card {
+        width: 80px !important;
+        padding: 0.65rem 0.4rem !important;
+        font-size: 0.65rem !important;
+    }
+    .hero-visual {
+        min-height: 360px;
+        padding: 1.5rem 1rem;
+        gap: 1.5rem;
+    }
+    
+    /* Shrink visual broker slots */
+    .partition-col {
+        padding: 0.4rem;
+        min-height: 80px;
+    }
+    .partition-title {
+        font-size: 0.65rem;
+    }
+    .offset-record {
+        font-size: 0.55rem;
+        padding: 0.2rem;
+    }
+    .rabbitmq-queue-box {
+        min-height: 55px;
+        padding: 0.5rem;
+    }
+    .queue-card {
+        padding: 0.35rem 0.55rem;
+        font-size: 0.65rem;
+    }
+    
+    /* Shrink Stepper circles */
+    .step-circle {
+        width: 28px;
+        height: 28px;
+        font-size: 0.75rem;
+    }
+    .step-label {
+        font-size: 0.65rem;
+    }
+    .stepper-line {
+        top: 13px;
+        left: 1.5rem;
+        right: 1.5rem;
+    }
+    
+    .sim-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .sim-controls-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .sim-controls {
+        flex-direction: column;
+    }
+    .sim-controls .btn {
+        width: 100%;
+    }
+    .speed-control-box {
+        justify-content: center;
+    }
+    .sim-status-indicator {
+        justify-content: center;
+    }
+    
+    /* Layout columns */
+    .grid-2col {
+        grid-template-columns: 1fr;
+    }
+}
+
