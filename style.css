@@ -288,10 +288,10 @@ nav a:hover::after {
 }
 
 #header-cta-btn {
-    height: 36px;
-    padding: 8px 16px;
-    border-radius: 10px;
-    font-size: 13px;
+    height: 32px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
     font-weight: 600;
     color: #ffffff;
     background: linear-gradient(135deg, var(--color-primary), #0284c7);
@@ -1839,10 +1839,10 @@ footer p {
         font-size: 0.8rem;
     }
     #header-cta-btn {
-        padding: 6px 12px;
-        font-size: 12px;
-        height: 32px;
-        border-radius: 8px;
+        padding: 4px 8px;
+        font-size: 10.5px;
+        height: 28px;
+        border-radius: 5px;
     }
 
     /* Shrink visualizer node cards for mobile */
