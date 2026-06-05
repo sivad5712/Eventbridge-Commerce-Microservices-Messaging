@@ -62,9 +62,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // -----------------------------------------------------------------
-    // Part 3: Navigation smooth scrolling
+    // Part 3: Navigation smooth scrolling & Mobile Drawer Menu
     // -----------------------------------------------------------------
-    document.querySelectorAll('header nav a').forEach(anchor => {
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    // Smooth scroll for all header navigation links and CTA buttons
+    const navSelectors = '.nav-desktop a, .mobile-nav a, #header-cta-btn';
+    document.querySelectorAll(navSelectors).forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
             const targetId = this.getAttribute('href');
@@ -75,8 +80,26 @@ document.addEventListener('DOMContentLoaded', () => {
                     behavior: 'smooth'
                 });
             }
+            
+            // Close mobile menu if active
+            if (mobileMenu && mobileMenu.classList.contains('active')) {
+                mobileMenu.classList.remove('active');
+                if (mobileMenuToggle) mobileMenuToggle.classList.remove('active');
+                document.body.style.overflow = '';
+            }
         });
     });
+
+    // Toggle mobile menu drawer
+    if (mobileMenuToggle && mobileMenu) {
+        mobileMenuToggle.addEventListener('click', () => {
+            const isActive = mobileMenu.classList.toggle('active');
+            mobileMenuToggle.classList.toggle('active');
+            
+            // Toggle body overflow scroll lock
+            document.body.style.overflow = isActive ? 'hidden' : '';
+        });
+    }
 
     // -----------------------------------------------------------------
     // Part 4: SVG Path Dynamic Updater (Responsive Layout)
