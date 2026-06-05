@@ -287,6 +287,14 @@ nav a:hover::after {
     box-shadow: 0 6px 25px rgba(56, 189, 248, 0.5);
 }
 
+#header-cta-btn {
+    padding: 0.45rem 1.15rem;
+    font-size: 0.82rem;
+    border-radius: 20px;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.25);
+}
+
 .btn-secondary {
     background: rgba(255, 255, 255, 0.02);
     color: var(--text-primary);
